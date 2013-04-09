@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html>
+<head>
+
+<!-- Metadata -->
+<meta http-equiv="Content-type" name="viewport"
+	content="initial-scale=1.0, maximum-scale=1.0, user-scalable=no, width=device-width">
+
+<title>Hello world</title>
+
+<!-- Link to your style sheet (css files) -->
+<link rel="stylesheet" href="styles/master.css" type="text/css"
+	charset="utf-8" />
+
+<!-- Load cordova's script -->
+<script type="text/javascript" charset="utf-8"
+	src="scripts/cordova-2.3.0.js"></script>
+
+<!-- Load your script -->
+<script type="text/javascript" charset="utf-8"
+	src="scripts/jquery-1.9.1.js"></script>
+<script type="text/javascript" charset="utf-8"
+	src="scripts/jquery.mobiledragdrop.js"></script>
+
+<script type="text/javascript" charset="utf-8"
+	src="scripts/jquery-ui.js"></script>
+<script type="text/javascript" charset="utf-8" src="scripts/main.js"></script>
+<script type="text/javascript" charset="utf-8">
+	$(function() {
+		$("#draggable").mobiledraganddrop({ targets: ".drop" }); 
+	});
+</script>
+<style>
+#draggable {
+	width: 150px;
+	height: 150px;
+	padding: 0.5em;
+}
+</style>
+
+</head>
+
+<body onload="onLoad();">
+
+	<div id="container"></div>
+    <div id="buttons">
+      <input type="button" id="start" value="Start">
+      <input type="button" id="stop" value="Stop">
+    </div>
+    <script src="http://d3lp1msu2r81bx.cloudfront.net/kjs/js/lib/kinetic-v4.4.1.min.js"></script>
+    <script defer="defer">
+      var stage = new Kinetic.Stage({
+        container: 'container',
+        width: window.innerWidth,
+        height: window.innerHeight
+      });
+      var layer = new Kinetic.Layer();
+
+      var hexagon = new Kinetic.RegularPolygon({
+        x: stage.getWidth() / 2,
+        y: stage.getHeight() / 2,
+        sides: 6,
+        radius: 70,
+        fill: 'red',
+        stroke: 'black',
+        strokeWidth: 4
+      });
+
+      layer.add(hexagon);
+      stage.add(layer);
+
+      var amplitude = 150;
+      // in ms
+      var period = 2000;
+      var centerX = stage.getWidth() / 2;
+
+      var anim = new Kinetic.Animation(function(frame) {
+        hexagon.setX(amplitude * Math.sin(frame.time * 2 * Math.PI / period) + centerX);
+      }, layer);
+
+      document.getElementById('start').addEventListener('click', function() {
+        anim.start();
+      }, false);
+      
+      document.getElementById('stop').addEventListener('click', function() {
+        anim.stop();
+      }, false);
+
+
+
+</body>
+</html>
